@@ -199,7 +199,6 @@ class WaterComplex extends Mesh {
 
 		//this.type = 'Water';
 
-		// eslint-disable-next-line @typescript-eslint/no-this-alias
 		const scope = this;
 
 		const color =

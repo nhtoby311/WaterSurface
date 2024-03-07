@@ -25,11 +25,11 @@ export default function Scene() {
 
 		rippleFX: folder(
 			{
-				alpha: 0.6,
-				fadeout_speed: 0.9,
+				alpha: 1.0,
+				fadeout_speed: 0.94,
 				frequency: 0.01,
-				rotation: 0.05,
-				scale: 0.3,
+				rotation: 0.02,
+				scale: 0.06,
 			},
 			{ render: (get) => get('fxType') === 'ripple' }
 		),
@@ -78,7 +78,7 @@ export default function Scene() {
 		<>
 			<Perf position={'top-left'} />
 
-			<Environment preset='park' background />
+			<Environment preset='studio' background />
 
 			<ambientLight />
 			<mesh>
@@ -90,7 +90,8 @@ export default function Scene() {
 				<WaterSurfaceSimple
 					fxType={controls.fxType}
 					width={controls.planeSize.width}
-					length={controls.planeSize.length}>
+					length={controls.planeSize.length}
+					fxDisplayColor={true}>
 					{FX_RENDER}
 				</WaterSurfaceSimple>
 			)}

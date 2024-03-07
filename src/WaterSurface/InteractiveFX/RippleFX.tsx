@@ -16,8 +16,8 @@ export default function RippleFX({
 	frequency = 0.01,
 	rotation = 0.05,
 	fadeout_speed = 0.9,
-	scale = 0.3,
-	alpha = 0.6,
+	scale = 0.2,
+	alpha = 1.0,
 }: FXRippleProps) {
 	const { ref: materialRef, refPointer } = useContext(WaterContext);
 

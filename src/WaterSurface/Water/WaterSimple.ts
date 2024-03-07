@@ -47,7 +47,6 @@ class WaterSimple extends Mesh {
 
 		//this.isWater = true;
 
-		// eslint-disable-next-line @typescript-eslint/no-this-alias
 		const scope = this;
 
 		const textureWidth =

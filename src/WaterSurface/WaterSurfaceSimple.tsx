@@ -1,9 +1,10 @@
 import { useMemo, useRef } from 'react';
-import InteractiveFX from './InteractiveFX/InteractiveFX';
 import { PlaneGeometry, RepeatWrapping, Vector2, Vector3 } from 'three';
 import { useFrame, useThree } from '@react-three/fiber';
 import { useTexture } from '@react-three/drei';
 import { WaterSimple } from './Water/WaterSimple';
+
+import { WaterContext } from './WaterContext';
 
 type Props = {
 	fxType?: string;
@@ -15,6 +16,7 @@ type Props = {
 	distortionScale?: number;
 	fxDistortionFactor?: number;
 	fxDisplayColor?: boolean;
+	children?: React.ReactNode;
 };
 
 export default function WaterSurfaceSimple({
@@ -27,6 +29,9 @@ export default function WaterSurfaceSimple({
 	distortionScale = 0.7,
 	fxDistortionFactor = 0.2,
 	fxDisplayColor = false,
+	children,
+
+	...props
 }: Props) {
 	const ref = useRef<any>();
 	const refPointer = useRef(new Vector2(0, 0));
@@ -67,7 +72,7 @@ export default function WaterSurfaceSimple({
 	};
 
 	return (
-		<>
+		<WaterContext.Provider value={{ ref: ref, refPointer: refPointer }}>
 			<primitive
 				ref={ref}
 				onPointerMove={handlePointerMove}
@@ -76,12 +81,7 @@ export default function WaterSurfaceSimple({
 				position={position}
 			/>
 
-			<InteractiveFX
-				fxType={fxType}
-				materialRef={ref}
-				refPointer={refPointer}
-				splatRadius={0.00001}
-			/>
-		</>
+			{children}
+		</WaterContext.Provider>
 	);
 }

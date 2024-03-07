@@ -1,11 +1,14 @@
 import { useMemo, useRef } from 'react';
-import InteractiveFX from './InteractiveFX/InteractiveFX';
 import { PlaneGeometry, Vector2 } from 'three';
 import { useThree } from '@react-three/fiber';
 import { useTexture } from '@react-three/drei';
 import { WaterComplex } from './Water/WaterComplex';
+import { WaterContext } from './WaterContext';
 
-export default function WaterSurfaceComplex({ fxType = 'fluid' }: any) {
+export default function WaterSurfaceComplex({
+	fxType = 'fluid',
+	children,
+}: any) {
 	const ref = useRef<any>();
 	const refPointer = useRef(new Vector2(0, 0));
 
@@ -45,7 +48,7 @@ export default function WaterSurfaceComplex({ fxType = 'fluid' }: any) {
 	};
 
 	return (
-		<>
+		<WaterContext.Provider value={{ ref, refPointer }}>
 			<primitive
 				ref={ref}
 				onPointerMove={handlePointerMove}
@@ -54,12 +57,7 @@ export default function WaterSurfaceComplex({ fxType = 'fluid' }: any) {
 				position={[0, -5, 0]}
 			/>
 
-			<InteractiveFX
-				fxType={fxType}
-				materialRef={ref}
-				refPointer={refPointer}
-				splatRadius={0.00001}
-			/>
-		</>
+			{children}
+		</WaterContext.Provider>
 	);
 }

@@ -1,7 +1,8 @@
 import { useBlending, useFluid, usePointer } from '@funtech-inc/use-shader-fx';
 import { useFrame, useThree } from '@react-three/fiber';
-import { useMemo } from 'react';
+import { useContext, useMemo } from 'react';
 import { Vector2, Vector3 } from 'three';
+import { WaterContext } from '../WaterContext';
 
 const fluidColorFn = (velocity: Vector2) => {
 	const rCol = 0.005;
@@ -10,9 +11,7 @@ const fluidColorFn = (velocity: Vector2) => {
 	return new Vector3(rCol * 8.0, gCol * 8.0, bCol * 8.0);
 };
 
-type Props = {
-	materialRef: any;
-	refPointer: any;
+export type FXFluidProps = {
 	densityDissipation?: number;
 	velocityDissipation?: number;
 	velocityAcceleration?: number;
@@ -24,9 +23,6 @@ type Props = {
 };
 
 export default function FluidFX({
-	materialRef,
-	refPointer,
-
 	densityDissipation = 0.977,
 	velocityDissipation = 0.99,
 	velocityAcceleration = 20.0,
@@ -35,7 +31,9 @@ export default function FluidFX({
 	curlStrength = 7.0,
 	pressureIterations = 2,
 	fluidColor = fluidColorFn,
-}: Props) {
+}: FXFluidProps) {
+	const { ref: materialRef, refPointer } = useContext(WaterContext);
+
 	const { size, dpr } = useThree((state) => {
 		return { size: state.size, dpr: state.viewport.dpr };
 	});

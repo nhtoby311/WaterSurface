@@ -12,8 +12,13 @@ export default function Scene() {
 			options: ['simple', 'complex'],
 		},
 
+		fxType: {
+			value: 'ripple',
+			options: ['ripple', 'fluid'],
+		},
+
 		planeSize: {
-			value: 190,
+			value: { width: 190, length: 190 },
 		},
 	});
 
@@ -30,9 +35,17 @@ export default function Scene() {
 			</mesh>
 
 			{controls.waterType === 'simple' ? (
-				<WaterSurfaceSimple />
+				<WaterSurfaceSimple
+					fxType={controls.fxType}
+					width={controls.planeSize.width}
+					length={controls.planeSize.length}
+				/>
 			) : (
-				<WaterSurfaceComplex />
+				<WaterSurfaceComplex
+					fxType={controls.fxType}
+					width={controls.planeSize.width}
+					length={controls.planeSize.length}
+				/>
 			)}
 		</>
 	);

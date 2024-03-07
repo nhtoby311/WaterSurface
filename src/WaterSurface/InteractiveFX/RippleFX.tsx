@@ -9,6 +9,16 @@ import { useFrame, useThree } from '@react-three/fiber';
 import { useMemo } from 'react';
 import { Vector2, Vector3 } from 'three';
 
+type Props = {
+	materialRef: any;
+	refPointer: any;
+	frequency?: number;
+	rotation?: number;
+	fadeout_speed?: number;
+	scale?: number;
+	alpha?: number;
+};
+
 export default function RippleFX({
 	materialRef,
 	refPointer,
@@ -18,18 +28,13 @@ export default function RippleFX({
 	fadeout_speed = 0.9,
 	scale = 0.3,
 	alpha = 0.6,
-}: any) {
+}: Props) {
 	//CUSTOM: For applying use-shader-fx on top of the MeshReflectorMaterial.
 	const { size, dpr } = useThree((state) => {
 		return { size: state.size, dpr: state.viewport.dpr };
 	});
 
 	const ripple = useTexture('/fx/smoke.png');
-
-	// const [updateFluid, setFluid] = use({
-	// 	size,
-	// 	dpr,
-	// });
 
 	const [updateRipple, setRipple] = useRipple({
 		size,
@@ -62,8 +67,6 @@ export default function RippleFX({
 		});
 		//console.log(materialRef.current!.material.uniforms.u_fx);
 		materialRef.current!.material.uniforms.u_fx.value = fx;
-		materialRef.current!.material.uniforms.fxDisplayColor.value = false;
-		materialRef.current!.material.uniforms.fxDistortionFactor.value = 0.5;
 	});
 
 	return null;

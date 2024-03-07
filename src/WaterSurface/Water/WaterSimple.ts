@@ -36,6 +36,9 @@ type WaterOptions = {
 	distortionScale?: number;
 	side?: Side;
 	fog?: boolean;
+
+	fxDistortionFactor?: number;
+	fxDisplayColor?: boolean;
 };
 
 class WaterSimple extends Mesh {
@@ -71,6 +74,9 @@ class WaterSimple extends Mesh {
 		const side = options.side !== undefined ? options.side : FrontSide;
 		const fog = options.fog !== undefined ? options.fog : false;
 
+		const fxDistortionFactor = options.fxDistortionFactor || 1.0;
+		const fxDisplayColor = options.fxDisplayColor!;
+
 		//
 
 		const mirrorPlane = new Plane();
@@ -102,6 +108,8 @@ class WaterSimple extends Mesh {
 				UniformsLib['fog'],
 				UniformsLib['lights'],
 				{
+					//sunColor: { value: new Color(0x7f7f7f) },
+					//sunDirection: { value: new Vector3(0.70707, 0.70707, 0) },
 					normalSampler: { value: null },
 					mirrorSampler: { value: null },
 					alpha: { value: 1.0 },
@@ -109,8 +117,6 @@ class WaterSimple extends Mesh {
 					size: { value: 1.0 },
 					distortionScale: { value: 20.0 },
 					textureMatrix: { value: new Matrix4() },
-					sunColor: { value: new Color(0x7f7f7f) },
-					sunDirection: { value: new Vector3(0.70707, 0.70707, 0) },
 					eye: { value: new Vector3() },
 					waterColor: { value: new Color(0x555555) },
 					u_fx: { value: 0.0 },
@@ -156,10 +162,10 @@ class WaterSimple extends Mesh {
 				uniform float size;
 				uniform float distortionScale;
 				uniform sampler2D normalSampler;
-				uniform vec3 sunColor;
-				uniform vec3 sunDirection;
 				uniform vec3 eye;
 				uniform vec3 waterColor;
+                // uniform vec3 sunColor;
+				// uniform vec3 sunDirection;
 
                 uniform sampler2D u_fx;
                 uniform float fxDistortionFactor;
@@ -258,6 +264,10 @@ class WaterSimple extends Mesh {
 		material.uniforms['distortionScale'].value = distortionScale;
 
 		material.uniforms['eye'].value = eye;
+
+		material.uniforms['u_fx'].value = null;
+		material.uniforms['fxDistortionFactor'].value = fxDistortionFactor;
+		material.uniforms['fxDisplayColor'].value = fxDisplayColor;
 
 		scope.material = material;
 

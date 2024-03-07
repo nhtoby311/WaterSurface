@@ -11,6 +11,10 @@ type Props = {
 	length?: number;
 	dimensions?: number;
 	waterColor?: number;
+	position?: [number, number, number];
+	distortionScale?: number;
+	fxDistortionFactor?: number;
+	fxDisplayColor?: boolean;
 };
 
 export default function WaterSurfaceSimple({
@@ -19,6 +23,10 @@ export default function WaterSurfaceSimple({
 	length = 190,
 	dimensions = 1024,
 	waterColor = 0x000000,
+	position = [0, 0, 0],
+	distortionScale = 0.7,
+	fxDistortionFactor = 0.2,
+	fxDisplayColor = false,
 }: Props) {
 	const ref = useRef<any>();
 	const refPointer = useRef(new Vector2(0, 0));
@@ -32,19 +40,19 @@ export default function WaterSurfaceSimple({
 			textureWidth: dimensions,
 			textureHeight: dimensions,
 			waterNormals,
-			sunDirection: new Vector3(),
-			sunColor: 0x000000,
+
 			waterColor: waterColor,
-			distortionScale: 0.7,
+			distortionScale: distortionScale,
+			fxDistortionFactor: fxDistortionFactor,
+			fxDisplayColor: fxDisplayColor,
 			fog: false,
 			format: (gl as any).encoding,
 		}),
 		[waterNormals]
 	);
-	useFrame(
-		(state, delta) =>
-			(ref.current.material.uniforms.time.value += delta / 2)
-	);
+	useFrame((state, delta) => {
+		if (ref.current) ref.current.material.uniforms.time.value += delta / 2;
+	});
 
 	//const refPointer = useRef(new Vector2(0, 0));
 
@@ -65,7 +73,7 @@ export default function WaterSurfaceSimple({
 				onPointerMove={handlePointerMove}
 				object={waterObj}
 				rotation-x={-Math.PI / 2}
-				position={[0, -5, 0]}
+				position={position}
 			/>
 
 			<InteractiveFX

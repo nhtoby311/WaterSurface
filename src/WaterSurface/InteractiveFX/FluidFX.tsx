@@ -10,10 +10,22 @@ const fluidColorFn = (velocity: Vector2) => {
 	return new Vector3(rCol * 8.0, gCol * 8.0, bCol * 8.0);
 };
 
+type Props = {
+	materialRef: any;
+	refPointer: any;
+	densityDissipation?: number;
+	velocityDissipation?: number;
+	velocityAcceleration?: number;
+	pressureDissipation?: number;
+	splatRadius?: number;
+	curlStrength?: number;
+	pressureIterations?: number;
+	fluidColor?: (velocity: Vector2) => Vector3;
+};
+
 export default function FluidFX({
 	materialRef,
 	refPointer,
-	fxType = 'fluid',
 
 	densityDissipation = 0.977,
 	velocityDissipation = 0.99,
@@ -23,8 +35,7 @@ export default function FluidFX({
 	curlStrength = 7.0,
 	pressureIterations = 2,
 	fluidColor = fluidColorFn,
-}: any) {
-	//CUSTOM: For applying use-shader-fx on top of the MeshReflectorMaterial.
+}: Props) {
 	const { size, dpr } = useThree((state) => {
 		return { size: state.size, dpr: state.viewport.dpr };
 	});
@@ -33,9 +44,7 @@ export default function FluidFX({
 		size,
 		dpr,
 	});
-	const [updateBlending, setBlending] = useBlending({ size, dpr });
-
-	const colorVec = useMemo(() => new Vector3(), []);
+	const [updateBlending] = useBlending({ size, dpr });
 
 	setFluid({
 		density_dissipation: densityDissipation,
@@ -51,8 +60,6 @@ export default function FluidFX({
 	const updatePointer = usePointer();
 
 	useFrame((props) => {
-		//console.log('pointerValues', pointerValues);
-
 		const fluid = updateFluid(props, {
 			pointerValues: updatePointer(refPointer.current),
 		});
@@ -61,9 +68,8 @@ export default function FluidFX({
 			map: fluid,
 			alphaMap: false,
 		});
-		//console.log(materialRef.current!.material.uniforms.u_fx);
+
 		materialRef.current!.material.uniforms.u_fx.value = fx;
-		//materialRef.current!.material.uniforms.fxDisplayColor.value = false;
 		materialRef.current!.material.uniforms.fxDistortionFactor.value = 0.08;
 	});
 

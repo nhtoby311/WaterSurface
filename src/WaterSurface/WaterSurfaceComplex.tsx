@@ -5,10 +5,35 @@ import { useTexture } from '@react-three/drei';
 import { WaterComplex } from './Water/WaterComplex';
 import { WaterContext } from './WaterContext';
 
+type Props = {
+	children?: React.ReactNode;
+	position?: [number, number, number];
+	width?: number;
+	length?: number;
+	color?: number | string;
+	scale?: number;
+	flowDirection?: Vector2 | [number, number];
+	flowSpeed?: number;
+	dimensions?: number;
+	reflectivity?: number;
+	fxDistortionFactor?: number;
+	fxDisplayColor?: boolean;
+};
+
 export default function WaterSurfaceComplex({
-	fxType = 'fluid',
 	children,
-}: any) {
+	position,
+	width = 190,
+	length = 190,
+	color,
+	scale = 11,
+	flowDirection = new Vector2(1.0, 0.5),
+	flowSpeed = 0.05,
+	dimensions = 1024,
+	reflectivity = 1.2,
+	fxDistortionFactor = 0.2,
+	fxDisplayColor = false,
+}: Props) {
 	const ref = useRef<any>();
 	const refPointer = useRef(new Vector2(0, 0));
 
@@ -18,21 +43,38 @@ export default function WaterSurfaceComplex({
 		'/water/complex/Water_2_M_Normal.jpg',
 	]);
 	//waterNormals.wrapS = waterNormals.wrapT = RepeatWrapping;
-	const geom = useMemo(() => new PlaneGeometry(190, 190), []);
+	const geom = useMemo(
+		() => new PlaneGeometry(width, length),
+		[length, width]
+	);
 	const config = useMemo(
 		() => ({
-			color: 0xffffff,
-			scale: 11,
-			flowDirection: new Vector2(1.0, 0.5),
-			flowSpeed: 0.05,
-			textureWidth: 1024,
-			textureHeight: 1024,
+			color: color,
+			scale: scale,
+			flowDirection: flowDirection as Vector2,
+			flowSpeed: flowSpeed,
+			textureWidth: dimensions,
+			textureHeight: dimensions,
 			normalMap0: waterNormals1,
 			normalMap1: waterNormals2,
-			reflectivity: 1.2,
+			reflectivity: reflectivity,
 			encoding: (gl as any).encoding,
+			fxDistortionFactor: fxDistortionFactor,
+			fxDisplayColor: fxDisplayColor,
 		}),
-		[waterNormals1, waterNormals2]
+		[
+			color,
+			dimensions,
+			flowDirection,
+			flowSpeed,
+			fxDisplayColor,
+			fxDistortionFactor,
+			gl,
+			reflectivity,
+			scale,
+			waterNormals1,
+			waterNormals2,
+		]
 	);
 
 	//const refPointer = useRef(new Vector2(0, 0));
@@ -54,7 +96,7 @@ export default function WaterSurfaceComplex({
 				onPointerMove={handlePointerMove}
 				object={waterObj}
 				rotation-x={-Math.PI / 2}
-				position={[0, -5, 0]}
+				position={position}
 			/>
 
 			{children}

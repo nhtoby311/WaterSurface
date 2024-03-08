@@ -68,7 +68,6 @@ export default function FluidFX({
 		});
 
 		materialRef.current!.material.uniforms.u_fx.value = fx;
-		materialRef.current!.material.uniforms.fxDistortionFactor.value = 0.08;
 	});
 
 	return null;

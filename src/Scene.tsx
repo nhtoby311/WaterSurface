@@ -23,6 +23,8 @@ export default function Scene() {
 			value: { width: 190, length: 190 },
 		},
 
+		position: [0, -3, 0],
+
 		simpleWater: folder(
 			{
 				waterColor: '#000000',
@@ -32,6 +34,18 @@ export default function Scene() {
 				fxMixColor: '#233054',
 			},
 			{ render: (get) => get('waterType') === 'simple' }
+		),
+
+		complexWater: folder(
+			{
+				fxDistortionFactor_complex: 0.05,
+				fxDisplayColor_complex: true,
+				flowSpeed: 0.03,
+				flowDirection: [1.0, 0.5],
+				reflectivity: 1.2,
+				scale_complex: 5,
+			},
+			{ render: (get) => get('waterType') === 'complex' }
 		),
 
 		rippleFX: folder(
@@ -99,6 +113,7 @@ export default function Scene() {
 
 			{controls.waterType === 'simple' && (
 				<WaterSurfaceSimple
+					position={controls.position}
 					width={controls.planeSize.width}
 					length={controls.planeSize.length}
 					fxDistortionFactor={controls.fxDistortionFactor}
@@ -109,9 +124,15 @@ export default function Scene() {
 			)}
 			{controls.waterType === 'complex' && (
 				<WaterSurfaceComplex
-					fxType={controls.fxType}
+					position={controls.position}
 					width={controls.planeSize.width}
-					length={controls.planeSize.length}>
+					length={controls.planeSize.length}
+					fxDistortionFactor={controls.fxDistortionFactor_complex}
+					fxDisplayColor={controls.fxDisplayColor_complex}
+					flowSpeed={controls.flowSpeed}
+					flowDirection={controls.flowDirection}
+					reflectivity={controls.reflectivity}
+					scale={controls.scale_complex}>
 					{FX_RENDER}
 				</WaterSurfaceComplex>
 			)}

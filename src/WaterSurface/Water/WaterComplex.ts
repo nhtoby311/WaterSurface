@@ -29,6 +29,8 @@ type WaterOptions = {
 	normalMap0?: Texture;
 	normalMap1?: Texture;
 	encoding?: 3000 | 3001 | any;
+	fxDisplayColor?: boolean;
+	fxDistortionFactor?: number;
 };
 
 class WaterComplex extends Mesh {
@@ -67,7 +69,7 @@ class WaterComplex extends Mesh {
 			},
 
 			u_fx: { value: 0.0 },
-			fxDistortionFactor: { value: 1.0 },
+			fxDistortionFactor: { value: 0.0 },
 			fxDisplayColor: { value: true },
 		},
 
@@ -220,6 +222,9 @@ class WaterComplex extends Mesh {
 		const normalMap0 = options.normalMap0;
 		const normalMap1 = options.normalMap1;
 
+		const fxDistortionFactor = options.fxDistortionFactor;
+		const fxDisplayColor = options.fxDisplayColor!;
+
 		const cycle = 0.15; // a cycle of a flow map phase
 		const halfCycle = cycle * 0.5;
 		const textureMatrix = new Matrix4();
@@ -303,6 +308,13 @@ class WaterComplex extends Mesh {
 		(this.material as any).uniforms['color'].value = color;
 		(this.material as any).uniforms['reflectivity'].value = reflectivity;
 		(this.material as any).uniforms['textureMatrix'].value = textureMatrix;
+
+		// fx
+		(this.material as any).uniforms['u_fx'].value = null;
+		(this.material as any).uniforms['fxDistortionFactor'].value =
+			fxDistortionFactor;
+		(this.material as any).uniforms['fxDisplayColor'].value =
+			fxDisplayColor;
 
 		// inital values
 

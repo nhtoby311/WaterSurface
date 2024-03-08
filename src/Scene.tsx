@@ -23,6 +23,17 @@ export default function Scene() {
 			value: { width: 190, length: 190 },
 		},
 
+		simpleWater: folder(
+			{
+				waterColor: '#000000',
+				distortionScale: 0.7,
+				fxDistortionFactor: 0.2,
+				fxDisplayColor: false,
+				fxMixColor: '#233054',
+			},
+			{ render: (get) => get('waterType') === 'simple' }
+		),
+
 		rippleFX: folder(
 			{
 				alpha: 1.0,
@@ -88,10 +99,11 @@ export default function Scene() {
 
 			{controls.waterType === 'simple' && (
 				<WaterSurfaceSimple
-					fxType={controls.fxType}
 					width={controls.planeSize.width}
 					length={controls.planeSize.length}
-					fxDisplayColor={true}>
+					fxDistortionFactor={controls.fxDistortionFactor}
+					fxDisplayColor={controls.fxDisplayColor}
+					fxMixColor={controls.fxMixColor}>
 					{FX_RENDER}
 				</WaterSurfaceSimple>
 			)}

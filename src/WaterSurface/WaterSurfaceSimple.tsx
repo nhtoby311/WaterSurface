@@ -7,7 +7,6 @@ import { WaterSimple } from './Water/WaterSimple';
 import { WaterContext } from './WaterContext';
 
 type Props = {
-	fxType?: string;
 	width?: number;
 	length?: number;
 	dimensions?: number;
@@ -16,11 +15,11 @@ type Props = {
 	distortionScale?: number;
 	fxDistortionFactor?: number;
 	fxDisplayColor?: boolean;
+	fxMixColor?: number | string;
 	children?: React.ReactNode;
 };
 
 export default function WaterSurfaceSimple({
-	fxType = 'ripple',
 	width = 190,
 	length = 190,
 	dimensions = 1024,
@@ -29,9 +28,8 @@ export default function WaterSurfaceSimple({
 	distortionScale = 0.7,
 	fxDistortionFactor = 0.2,
 	fxDisplayColor = false,
+	fxMixColor = 0x000000,
 	children,
-
-	...props
 }: Props) {
 	const ref = useRef<any>();
 	const refPointer = useRef(new Vector2(0, 0));
@@ -39,7 +37,10 @@ export default function WaterSurfaceSimple({
 	const gl = useThree((state) => state.gl);
 	const waterNormals = useTexture('/water/simple/waternormals.jpeg');
 	waterNormals.wrapS = waterNormals.wrapT = RepeatWrapping;
-	const geom = useMemo(() => new PlaneGeometry(width, length), []);
+	const geom = useMemo(
+		() => new PlaneGeometry(width, length),
+		[length, width]
+	);
 	const config = useMemo(
 		() => ({
 			textureWidth: dimensions,
@@ -50,10 +51,20 @@ export default function WaterSurfaceSimple({
 			distortionScale: distortionScale,
 			fxDistortionFactor: fxDistortionFactor,
 			fxDisplayColor: fxDisplayColor,
+			fxMixColor: fxMixColor,
 			fog: false,
 			format: (gl as any).encoding,
 		}),
-		[waterNormals]
+		[
+			dimensions,
+			distortionScale,
+			fxDisplayColor,
+			fxDistortionFactor,
+			fxMixColor,
+			gl,
+			waterColor,
+			waterNormals,
+		]
 	);
 	useFrame((state, delta) => {
 		if (ref.current) ref.current.material.uniforms.time.value += delta / 2;

@@ -39,6 +39,7 @@ type WaterOptions = {
 
 	fxDistortionFactor?: number;
 	fxDisplayColor?: boolean;
+	fxMixColor?: Color | string | number;
 };
 
 class WaterSimple extends Mesh {
@@ -75,6 +76,7 @@ class WaterSimple extends Mesh {
 
 		const fxDistortionFactor = options.fxDistortionFactor || 1.0;
 		const fxDisplayColor = options.fxDisplayColor!;
+		const fxMixColor = new Color(options.fxMixColor || 0x000000);
 
 		//
 
@@ -121,6 +123,7 @@ class WaterSimple extends Mesh {
 					u_fx: { value: 0.0 },
 					fxDistortionFactor: { value: 1.0 },
 					fxDisplayColor: { value: true },
+					fxMixColor: { value: new Vector3(0, 0, 0) },
 				},
 			]),
 
@@ -169,6 +172,7 @@ class WaterSimple extends Mesh {
                 uniform sampler2D u_fx;
                 uniform float fxDistortionFactor;
                 uniform bool fxDisplayColor;
+                uniform vec3 fxMixColor;
 
 				varying vec4 mirrorCoord;
 				varying vec4 worldPosition;
@@ -234,6 +238,8 @@ class WaterSimple extends Mesh {
 					float luminance = dot(fx.rgb, vec3(0.299, 0.587, 0.114));
                     vec3 mixedColor = mix(outgoingLight, fx.rgb, fxDisplayColor ? luminance : 0.0);
 
+                    mixedColor += fx.rgb * fxMixColor;
+
                     gl_FragColor = vec4(mixedColor, alpha);
 
 					#include <tonemapping_fragment>
@@ -267,6 +273,7 @@ class WaterSimple extends Mesh {
 		material.uniforms['u_fx'].value = null;
 		material.uniforms['fxDistortionFactor'].value = fxDistortionFactor;
 		material.uniforms['fxDisplayColor'].value = fxDisplayColor;
+		material.uniforms['fxMixColor'].value = fxMixColor;
 
 		scope.material = material;
 

@@ -14,7 +14,7 @@ type Props = {
 	position?: [number, number, number];
 	distortionScale?: number;
 	fxDistortionFactor?: number;
-	fxDisplayColor?: boolean;
+	fxDisplayColorAlpha?: number;
 	fxMixColor?: number | string;
 	children?: React.ReactNode;
 };
@@ -27,7 +27,7 @@ export default function WaterSurfaceSimple({
 	position = [0, 0, 0],
 	distortionScale = 0.7,
 	fxDistortionFactor = 0.2,
-	fxDisplayColor = false,
+	fxDisplayColorAlpha = 0.0,
 	fxMixColor = 0x000000,
 	children,
 }: Props) {
@@ -50,7 +50,7 @@ export default function WaterSurfaceSimple({
 			waterColor: waterColor,
 			distortionScale: distortionScale,
 			fxDistortionFactor: fxDistortionFactor,
-			fxDisplayColor: fxDisplayColor,
+			fxDisplayColorAlpha: fxDisplayColorAlpha,
 			fxMixColor: fxMixColor,
 			fog: false,
 			format: (gl as any).encoding,
@@ -58,7 +58,7 @@ export default function WaterSurfaceSimple({
 		[
 			dimensions,
 			distortionScale,
-			fxDisplayColor,
+			fxDisplayColorAlpha,
 			fxDistortionFactor,
 			fxMixColor,
 			gl,

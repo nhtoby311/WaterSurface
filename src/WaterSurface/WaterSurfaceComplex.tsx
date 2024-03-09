@@ -17,7 +17,7 @@ type Props = {
 	dimensions?: number;
 	reflectivity?: number;
 	fxDistortionFactor?: number;
-	fxDisplayColor?: boolean;
+	fxDisplayColorAlpha?: number;
 };
 
 export default function WaterSurfaceComplex({
@@ -32,7 +32,7 @@ export default function WaterSurfaceComplex({
 	dimensions = 1024,
 	reflectivity = 1.2,
 	fxDistortionFactor = 0.2,
-	fxDisplayColor = false,
+	fxDisplayColorAlpha = 0.0,
 }: Props) {
 	const ref = useRef<any>();
 	const refPointer = useRef(new Vector2(0, 0));
@@ -60,14 +60,14 @@ export default function WaterSurfaceComplex({
 			reflectivity: reflectivity,
 			encoding: (gl as any).encoding,
 			fxDistortionFactor: fxDistortionFactor,
-			fxDisplayColor: fxDisplayColor,
+			fxDisplayColorAlpha: fxDisplayColorAlpha,
 		}),
 		[
 			color,
 			dimensions,
 			flowDirection,
 			flowSpeed,
-			fxDisplayColor,
+			fxDisplayColorAlpha,
 			fxDistortionFactor,
 			gl,
 			reflectivity,

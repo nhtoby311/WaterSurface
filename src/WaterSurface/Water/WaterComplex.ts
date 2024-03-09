@@ -29,7 +29,7 @@ type WaterOptions = {
 	normalMap0?: Texture;
 	normalMap1?: Texture;
 	encoding?: 3000 | 3001 | any;
-	fxDisplayColor?: boolean;
+	fxDisplayColorAlpha?: number;
 	fxDistortionFactor?: number;
 };
 
@@ -70,7 +70,7 @@ class WaterComplex extends Mesh {
 
 			u_fx: { value: 0.0 },
 			fxDistortionFactor: { value: 0.0 },
-			fxDisplayColor: { value: true },
+			fxDisplayColorAlpha: { value: 1.0 },
 		},
 
 		vertexShader: /* glsl */ `
@@ -126,7 +126,7 @@ class WaterComplex extends Mesh {
 
             uniform sampler2D u_fx;
             uniform float fxDistortionFactor;
-            uniform bool fxDisplayColor;
+            uniform float fxDisplayColorAlpha;
     
             varying vec4 vCoord;
             varying vec2 vUv;
@@ -180,8 +180,8 @@ class WaterComplex extends Mesh {
                 
     
                 // multiply water color with the mix of both textures
-                float luminance = dot(fx.rgb, vec3(0.299, 0.587, 0.114));
-                vec3 mixedColor = mix(color * reflectColor.rgb, fx.rgb, fxDisplayColor ? luminance : 0.0);
+                float luminance = dot(fx.rgb * fxDisplayColorAlpha, vec3(0.299, 0.587, 0.114));
+                vec3 mixedColor = mix(color * reflectColor.rgb  , fx.rgb * fxDisplayColorAlpha, luminance * fxDisplayColorAlpha);
 
                 gl_FragColor = vec4(mixedColor, 1.0);
 
@@ -223,7 +223,7 @@ class WaterComplex extends Mesh {
 		const normalMap1 = options.normalMap1;
 
 		const fxDistortionFactor = options.fxDistortionFactor;
-		const fxDisplayColor = options.fxDisplayColor!;
+		const fxDisplayColorAlpha = options.fxDisplayColorAlpha;
 
 		const cycle = 0.15; // a cycle of a flow map phase
 		const halfCycle = cycle * 0.5;
@@ -313,8 +313,8 @@ class WaterComplex extends Mesh {
 		(this.material as any).uniforms['u_fx'].value = null;
 		(this.material as any).uniforms['fxDistortionFactor'].value =
 			fxDistortionFactor;
-		(this.material as any).uniforms['fxDisplayColor'].value =
-			fxDisplayColor;
+		(this.material as any).uniforms['fxDisplayColorAlpha'].value =
+			fxDisplayColorAlpha;
 
 		// inital values
 

@@ -38,7 +38,7 @@ type WaterOptions = {
 	fog?: boolean;
 
 	fxDistortionFactor?: number;
-	fxDisplayColor?: boolean;
+	fxDisplayColorAlpha?: number;
 	fxMixColor?: Color | string | number;
 };
 
@@ -75,7 +75,7 @@ class WaterSimple extends Mesh {
 		const fog = options.fog !== undefined ? options.fog : false;
 
 		const fxDistortionFactor = options.fxDistortionFactor || 1.0;
-		const fxDisplayColor = options.fxDisplayColor!;
+		const fxDisplayColorAlpha = options.fxDisplayColorAlpha;
 		const fxMixColor = new Color(options.fxMixColor || 0x000000);
 
 		//
@@ -122,7 +122,7 @@ class WaterSimple extends Mesh {
 					waterColor: { value: new Color(0x555555) },
 					u_fx: { value: 0.0 },
 					fxDistortionFactor: { value: 1.0 },
-					fxDisplayColor: { value: true },
+					fxDisplayColorAlpha: { value: 0.0 },
 					fxMixColor: { value: new Vector3(0, 0, 0) },
 				},
 			]),
@@ -171,7 +171,7 @@ class WaterSimple extends Mesh {
 
                 uniform sampler2D u_fx;
                 uniform float fxDistortionFactor;
-                uniform bool fxDisplayColor;
+                uniform float fxDisplayColorAlpha;
                 uniform vec3 fxMixColor;
 
 				varying vec4 mirrorCoord;
@@ -235,8 +235,8 @@ class WaterSimple extends Mesh {
                     vec3 outgoingLight = reflectionSample;
 
 
-					float luminance = dot(fx.rgb, vec3(0.299, 0.587, 0.114));
-                    vec3 mixedColor = mix(outgoingLight, fx.rgb, fxDisplayColor ? luminance : 0.0);
+					float luminance = dot(fx.rgb * fxDisplayColorAlpha, vec3(0.299, 0.587, 0.114));
+                    vec3 mixedColor = mix(outgoingLight, fx.rgb * fxDisplayColorAlpha, luminance * fxDisplayColorAlpha);
 
                     mixedColor += fx.rgb * fxMixColor;
 
@@ -272,7 +272,7 @@ class WaterSimple extends Mesh {
 
 		material.uniforms['u_fx'].value = null;
 		material.uniforms['fxDistortionFactor'].value = fxDistortionFactor;
-		material.uniforms['fxDisplayColor'].value = fxDisplayColor;
+		material.uniforms['fxDisplayColorAlpha'].value = fxDisplayColorAlpha;
 		material.uniforms['fxMixColor'].value = fxMixColor;
 
 		scope.material = material;

@@ -30,7 +30,7 @@ export default function Scene() {
 				waterColor: '#000000',
 				distortionScale: 0.7,
 				fxDistortionFactor: 0.2,
-				fxDisplayColor: false,
+				fxDisplayColorAlpha: 0.0,
 				fxMixColor: '#233054',
 			},
 			{ render: (get) => get('waterType') === 'simple' }
@@ -39,7 +39,7 @@ export default function Scene() {
 		complexWater: folder(
 			{
 				fxDistortionFactor_complex: 0.05,
-				fxDisplayColor_complex: true,
+				fxDisplayColorAlpha_complex: 1.0,
 				flowSpeed: 0.03,
 				flowDirection: [1.0, 0.5],
 				reflectivity: 1.2,
@@ -117,7 +117,7 @@ export default function Scene() {
 					width={controls.planeSize.width}
 					length={controls.planeSize.length}
 					fxDistortionFactor={controls.fxDistortionFactor}
-					fxDisplayColor={controls.fxDisplayColor}
+					fxDisplayColorAlpha={controls.fxDisplayColorAlpha}
 					fxMixColor={controls.fxMixColor}>
 					{FX_RENDER}
 				</WaterSurfaceSimple>
@@ -128,7 +128,7 @@ export default function Scene() {
 					width={controls.planeSize.width}
 					length={controls.planeSize.length}
 					fxDistortionFactor={controls.fxDistortionFactor_complex}
-					fxDisplayColor={controls.fxDisplayColor_complex}
+					fxDisplayColorAlpha={controls.fxDisplayColorAlpha_complex}
 					flowSpeed={controls.flowSpeed}
 					flowDirection={controls.flowDirection}
 					reflectivity={controls.reflectivity}

@@ -9,7 +9,10 @@ function App() {
 				<Canvas>
 					<Scene />
 
-					<OrbitControls />
+					<OrbitControls
+						minPolarAngle={0}
+						maxPolarAngle={Math.PI / 2}
+					/>
 				</Canvas>
 			</div>
 		</>

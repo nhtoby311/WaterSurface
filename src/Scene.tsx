@@ -1,11 +1,13 @@
 import { Perf } from 'r3f-perf';
 
-import { Environment } from '@react-three/drei';
+import { Environment, Sparkles, useTexture } from '@react-three/drei';
 import WaterSurfaceSimple from './WaterSurface/WaterSurfaceSimple';
 import WaterSurfaceComplex from './WaterSurface/WaterSurfaceComplex';
 import { useControls, folder } from 'leva';
 import FluidFX from './WaterSurface/InteractiveFX/FluidFX';
 import RippleFX from './WaterSurface/InteractiveFX/RippleFX';
+import { BackSide, ShaderChunk } from 'three';
+import { useEffect } from 'react';
 
 export default function Scene() {
 	const controls = useControls({
@@ -103,16 +105,35 @@ export default function Scene() {
 		<>
 			<Perf position={'top-left'} />
 
-			<Environment preset='studio' background />
+			<Environment
+				//preset='studio'
+				background
+				files={[
+					'cubemap/sunset/right.png',
+					'cubemap/sunset/left.png',
+					'cubemap/sunset/top.png',
+					'cubemap/sunset/bot.png',
+					'cubemap/sunset/front.png',
+					'cubemap/sunset/back.png',
+				]}
+			/>
+
+			{/* <Sparkles scale={100} size={20} speed={5} /> */}
+
+			{/* <mesh position={[0, 0, 0]}>
+				<sphereGeometry args={[150, 32, 32]} />
+				<meshBasicMaterial side={BackSide} map={text} />
+			</mesh> */}
 
 			<ambientLight />
-			<mesh>
+			<mesh position={[0, 0, -5]}>
 				<boxGeometry attach='geometry' args={[5, 5, 5]} />
 				<meshStandardMaterial attach='material' color='hotpink' />
 			</mesh>
 
 			{controls.waterType === 'simple' && (
 				<WaterSurfaceSimple
+					dimensions={2048}
 					position={controls.position}
 					width={controls.planeSize.width}
 					length={controls.planeSize.length}
@@ -124,6 +145,7 @@ export default function Scene() {
 			)}
 			{controls.waterType === 'complex' && (
 				<WaterSurfaceComplex
+					dimensions={2048}
 					position={controls.position}
 					width={controls.planeSize.width}
 					length={controls.planeSize.length}

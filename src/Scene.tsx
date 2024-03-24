@@ -1,13 +1,14 @@
 import { Perf } from 'r3f-perf';
 
-import { Environment, Sparkles, useTexture } from '@react-three/drei';
+import { Environment, Float, Sparkles, useTexture } from '@react-three/drei';
 import WaterSurfaceSimple from './WaterSurface/WaterSurfaceSimple';
 import WaterSurfaceComplex from './WaterSurface/WaterSurfaceComplex';
 import { useControls, folder } from 'leva';
 import FluidFX from './WaterSurface/InteractiveFX/FluidFX';
 import RippleFX from './WaterSurface/InteractiveFX/RippleFX';
-import { BackSide, ShaderChunk } from 'three';
-import { useEffect } from 'react';
+
+import { Boat } from './WaterSurface/Boat';
+import { EffectComposer, N8AO, ToneMapping } from '@react-three/postprocessing';
 
 export default function Scene() {
 	const controls = useControls({
@@ -126,14 +127,9 @@ export default function Scene() {
 			</mesh> */}
 
 			<ambientLight />
-			<mesh position={[0, 0, -5]}>
-				<boxGeometry attach='geometry' args={[5, 5, 5]} />
-				<meshStandardMaterial attach='material' color='hotpink' />
-			</mesh>
 
 			{controls.waterType === 'simple' && (
 				<WaterSurfaceSimple
-					dimensions={2048}
 					position={controls.position}
 					width={controls.planeSize.width}
 					length={controls.planeSize.length}
@@ -158,6 +154,18 @@ export default function Scene() {
 					{FX_RENDER}
 				</WaterSurfaceComplex>
 			)}
+
+			<EffectComposer>
+				<N8AO intensity={5} aoRadius={8} halfRes />
+			</EffectComposer>
+
+			<Float
+				speed={2}
+				floatingRange={[-0.2, -0.3]}
+				floatIntensity={0.1}
+				rotationIntensity={0.5}>
+				<Boat rotation-y={Math.PI / 1.8} position={[0, -3.3, 0]} />
+			</Float>
 		</>
 	);
 }

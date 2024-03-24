@@ -6,7 +6,7 @@ function App() {
 	return (
 		<>
 			<div className='background-canvas'>
-				<Canvas>
+				<Canvas camera={{ position: [12, 1, 6] }}>
 					<Scene />
 
 					<OrbitControls

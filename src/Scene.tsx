@@ -36,9 +36,9 @@ export default function Scene() {
 			{
 				waterColor: '#000000',
 				distortionScale: 0.7,
-				fxDistortionFactor: 0.2,
+				fxDistortionFactor: 0.05,
 				fxDisplayColorAlpha: 0.0,
-				fxMixColor: '#233054',
+				fxMixColor: '#3f3f3f',
 			},
 			{ render: (get) => get('waterType') === 'simple' }
 		),
@@ -46,7 +46,7 @@ export default function Scene() {
 		complexWater: folder(
 			{
 				fxDistortionFactor_complex: 0.05,
-				fxDisplayColorAlpha_complex: 1.0,
+				fxDisplayColorAlpha_complex: 0.6,
 				flowSpeed: 0.03,
 				flowDirection: [1.0, 0.5],
 				reflectivity: 1.2,
@@ -72,7 +72,7 @@ export default function Scene() {
 				velocityDissipation: 0.99,
 				velocityAcceleration: 20.0,
 				pressureDissipation: 0.5,
-				splatRadius: 0.0002,
+				splatRadius: 0.00002,
 				curlStrength: 7.0,
 				pressureIterations: 2,
 			},

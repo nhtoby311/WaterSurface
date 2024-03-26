@@ -1,6 +1,6 @@
 # Interactive Water Surface
 
-A React Three Fiber component for water surface.
+A React Three Fiber component for water surface, with additional interactive FX.
 
 # Installation
 
@@ -23,10 +23,10 @@ WaterSurface
 
 Import components from the directory just copied above. There are 2 type of components: WaterSurface & InteractiveFX. All of them are listed below:
 
-- WaterSurfaceSimple
-- WaterSurfaceComplex
-- RippleFX
-- FluidFX
+-   WaterSurfaceSimple
+-   WaterSurfaceComplex
+-   RippleFX
+-   FluidFX
 
 WaterSurface type component will be the water shader plane that reflects your scene and apply distortion effects.
 
@@ -38,7 +38,7 @@ IntertiveFX type component will be the additional effects apply on the WaterSurf
 
 ```tsx
 <WaterSurfaceComplex>
-  <FluidFX />
+	<FluidFX />
 </WaterSurfaceComplex>
 ```
 

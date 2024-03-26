@@ -2,6 +2,9 @@
 
 A React Three Fiber component for water surface, with additional interactive FX.
 
+![image](https://github.com/nhtoby311/WaterSurface/assets/52330522/b65069fc-242d-4e2d-845d-83ede4d04a37)
+
+
 # Installation
 
 1. Make sure you have all dependencies installed first:

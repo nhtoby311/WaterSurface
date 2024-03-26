@@ -12,6 +12,10 @@ import { EffectComposer, N8AO, ToneMapping } from '@react-three/postprocessing';
 
 export default function Scene() {
 	const controls = useControls({
+		perfMonitor: {
+			value: false,
+		},
+
 		waterType: {
 			value: 'simple',
 			options: ['simple', 'complex'],
@@ -104,7 +108,7 @@ export default function Scene() {
 
 	return (
 		<>
-			<Perf position={'top-left'} />
+			{controls.perfMonitor && <Perf position={'top-left'} />}
 
 			<Environment
 				//preset='studio'

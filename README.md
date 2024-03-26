@@ -1,30 +1,51 @@
-# React + TypeScript + Vite
+# Interactive Water Surface
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React Three Fiber component for water surface.
 
-Currently, two official plugins are available:
+# Installation
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. Make sure you have all dependencies installed first:
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+```bash
+npm i three @react-three/fiber @funtech-inc/use-shader-fx @types/three
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+2. Then copy/download the `/WaterSurface` directory to your project
+
+```
+WaterSurface
+|_InteractiveFX
+|_Water
+|_...
+```
+
+# Usage
+
+Import components from the directory just copied above. There are 2 type of components: WaterSurface & InteractiveFX. All of them are listed below:
+
+- WaterSurfaceSimple
+- WaterSurfaceComplex
+- RippleFX
+- FluidFX
+
+WaterSurface type component will be the water shader plane that reflects your scene and apply distortion effects.
+
+```tsx
+<WaterSurfaceSimple />
+```
+
+IntertiveFX type component will be the additional effects apply on the WaterSurface type. This can be added as children component of the WaterSurface component
+
+```tsx
+<WaterSurfaceComplex>
+  <FluidFX />
+</WaterSurfaceComplex>
+```
+
+## WaterSurfaceSimple
+
+## WaterSurfaceComplex
+
+## RippleFX
+
+## FluidFX

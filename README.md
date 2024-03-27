@@ -22,7 +22,7 @@ WaterSurface
 |_...
 ```
 
-3. Copy/Download assets files to your `/public`, namely
+3. Copy/Download assets files in `/public` to your `/public`.
 
 ```
 /public
@@ -57,13 +57,15 @@ Import components from the directory just copied above. There are 2 type of comp
 
 WaterSurface type component will be the water shader plane that reflects your scene and apply distortion effects.
 
-```tsx
+```jsx
 <WaterSurfaceSimple />
 ```
 
 ### WaterSurfaceSimple
 
-Simple water surface using 1 normal map distortion. This is the three.js [Water](https://github.com/mrdoob/three.js/blob/66f7aa81379d0d3b31b7e58c9ecc42e08a16d724/examples/jsm/objects/Water.js) implementation. 
+Simple water surface using 1 normal map distortion, imported from `public/water/simple/waternormals.jpeg`. 
+
+This is the three.js [Water](https://github.com/mrdoob/three.js/blob/66f7aa81379d0d3b31b7e58c9ecc42e08a16d724/examples/jsm/objects/Water.js) implementation.
 
 ```tsx
 type Props = {
@@ -82,7 +84,9 @@ type Props = {
 
 ### WaterSurfaceComplex
 
-Complex Water Surface using 2 normal map distortion. This is the three.js [Water2](https://github.com/mrdoob/three.js/blob/66f7aa81379d0d3b31b7e58c9ecc42e08a16d724/examples/jsm/objects/Water2.js) implementation.
+Complex Water Surface using 2 normal map distortion, imported from `public/water/complex/Water_1_M_Normal.jpg` & `public/water/complex/Water_2_M_Normal.jpg`. 
+
+This is the three.js [Water2](https://github.com/mrdoob/three.js/blob/66f7aa81379d0d3b31b7e58c9ecc42e08a16d724/examples/jsm/objects/Water2.js) implementation.
 
 ```tsx
 type Props = {
@@ -101,11 +105,13 @@ type Props = {
 };
 ```
 
+(Will have support for refraction in near future!)
+
 ## InteractiveFX
 
-IntertiveFX type component will be the additional effects apply on the WaterSurface type. This can be added as children component of the WaterSurface component
+IntertiveFX type component will be the additional effects apply on the WaterSurface type. This can be added as children component of the WaterSurface component. 
 
-```tsx
+```jsx
 <WaterSurfaceComplex>
   <FluidFX />
 </WaterSurfaceComplex>
@@ -113,4 +119,39 @@ IntertiveFX type component will be the additional effects apply on the WaterSurf
 
 ### RippleFX
 
+Cheap ripple effect using image texture as distortion on water surface.
+
+An implementation of @funtech-inc/use-shader-fx [useRipple](https://use-shader-fx-stories.vercel.app/?path=/docs/interactions-useripple--docs) hook.
+
+```tsx
+type Props = {
+  frequency?: number;
+  rotation?: number;
+  fadeout_speed?: number;
+	scale?: number;
+	alpha?: number;
+};
+
+```
+
+Make sure you have `smoke.png` at `public/fx/smoke.png` first before using this.
+
 ### FluidFX
+
+Fluid simulation effect with customizable colors that distort water surface reflection.
+
+An implementation of @funtech-inc/use-shader-fx [useFluid](https://use-shader-fx-stories.vercel.app/?path=/docs/interactions-usefluid--docs) hook.
+
+```tsx
+type Props = {
+	densityDissipation?: number;
+	velocityDissipation?: number;
+	velocityAcceleration?: number;
+	pressureDissipation?: number;
+	splatRadius?: number;
+	curlStrength?: number;
+	pressureIterations?: number;
+	fluidColor?: (velocity: Vector2) => Vector3;
+};
+
+```

@@ -22,7 +22,7 @@ WaterSurface
 |_...
 ```
 
-3. Copy/Download assets files to your `/public`, namely
+3. Copy/Download assets files in `/public` to your `/public`.
 
 ```
 /public
@@ -63,7 +63,9 @@ WaterSurface type component will be the water shader plane that reflects your sc
 
 ### WaterSurfaceSimple
 
-Simple water surface using 1 normal map distortion, imported from `public/water/simple/waternormals.jpeg`. This is the three.js [Water](https://github.com/mrdoob/three.js/blob/66f7aa81379d0d3b31b7e58c9ecc42e08a16d724/examples/jsm/objects/Water.js) implementation.
+Simple water surface using 1 normal map distortion, imported from `public/water/simple/waternormals.jpeg`. 
+
+This is the three.js [Water](https://github.com/mrdoob/three.js/blob/66f7aa81379d0d3b31b7e58c9ecc42e08a16d724/examples/jsm/objects/Water.js) implementation.
 
 ```tsx
 type Props = {

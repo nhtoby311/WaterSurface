@@ -57,7 +57,7 @@ Import components from the directory just copied above. There are 2 type of comp
 
 WaterSurface type component will be the water shader plane that reflects your scene and apply distortion effects.
 
-```tsx
+```jsx
 <WaterSurfaceSimple />
 ```
 
@@ -105,7 +105,7 @@ type Props = {
 
 IntertiveFX type component will be the additional effects apply on the WaterSurface type. This can be added as children component of the WaterSurface component
 
-```tsx
+```jsx
 <WaterSurfaceComplex>
   <FluidFX />
 </WaterSurfaceComplex>

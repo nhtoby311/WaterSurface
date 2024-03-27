@@ -103,7 +103,7 @@ type Props = {
 
 ## InteractiveFX
 
-IntertiveFX type component will be the additional effects apply on the WaterSurface type. This can be added as children component of the WaterSurface component
+IntertiveFX type component will be the additional effects apply on the WaterSurface type. This can be added as children component of the WaterSurface component. 
 
 ```jsx
 <WaterSurfaceComplex>
@@ -113,4 +113,33 @@ IntertiveFX type component will be the additional effects apply on the WaterSurf
 
 ### RippleFX
 
+An implementation of @funtech-inc/use-shader-fx [useRipple](https://use-shader-fx-stories.vercel.app/?path=/docs/interactions-useripple--docs) hook.
+
+```tsx
+type Props = {
+	frequency?: number;
+	rotation?: number;
+	fadeout_speed?: number;
+	scale?: number;
+	alpha?: number;
+};
+
+```
+
 ### FluidFX
+
+An implementation of @funtech-inc/use-shader-fx [useFluid](https://use-shader-fx-stories.vercel.app/?path=/docs/interactions-usefluid--docs) hook.
+
+```tsx
+type Props = {
+	densityDissipation?: number;
+	velocityDissipation?: number;
+	velocityAcceleration?: number;
+	pressureDissipation?: number;
+	splatRadius?: number;
+	curlStrength?: number;
+	pressureIterations?: number;
+	fluidColor?: (velocity: Vector2) => Vector3;
+};
+
+```

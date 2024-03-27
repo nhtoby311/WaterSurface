@@ -7,7 +7,7 @@ import { useControls, folder } from 'leva';
 import FluidFX from './WaterSurface/InteractiveFX/FluidFX';
 import RippleFX from './WaterSurface/InteractiveFX/RippleFX';
 
-import { Boat } from './WaterSurface/Boat';
+import { Boat } from './Boat';
 import { EffectComposer, N8AO, ToneMapping } from '@react-three/postprocessing';
 
 export default function Scene() {

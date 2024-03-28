@@ -9,6 +9,7 @@ import RippleFX from './WaterSurface/InteractiveFX/RippleFX';
 
 import { Boat } from './Boat';
 import { EffectComposer, N8AO, ToneMapping } from '@react-three/postprocessing';
+import WaterSurface from './WaterSurface/WaterSurface';
 
 export default function Scene() {
 	const controls = useControls({
@@ -132,7 +133,7 @@ export default function Scene() {
 
 			<ambientLight />
 
-			{controls.waterType === 'simple' && (
+			{/* {controls.waterType === 'simple' && (
 				<WaterSurfaceSimple
 					position={controls.position}
 					width={controls.planeSize.width}
@@ -157,7 +158,7 @@ export default function Scene() {
 					scale={controls.scale_complex}>
 					{FX_RENDER}
 				</WaterSurfaceComplex>
-			)}
+			)} */}
 
 			<EffectComposer>
 				<N8AO intensity={5} aoRadius={8} halfRes />
@@ -170,6 +171,12 @@ export default function Scene() {
 				rotationIntensity={0.5}>
 				<Boat rotation-y={Math.PI / 1.8} position={[0, -3.3, 0]} />
 			</Float>
+
+			<WaterSurface
+				type={controls.waterType as 'simple' | 'complex'}
+				position={controls.position}>
+				{FX_RENDER}
+			</WaterSurface>
 		</>
 	);
 }

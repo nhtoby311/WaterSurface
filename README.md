@@ -1,6 +1,6 @@
 # Interactive Water Surface
 
-A React Three Fiber component for water surface, with additional interactive FX.
+A React Three Fiber component for water surface with realistic reflections, with additional interactive FX.
 
 ![image](https://github.com/nhtoby311/WaterSurface/assets/52330522/b65069fc-242d-4e2d-845d-83ede4d04a37)
 
@@ -10,10 +10,10 @@ A React Three Fiber component for water surface, with additional interactive FX.
 1. Make sure you have all dependencies installed first:
 
 ```bash
-npm i three @react-three/fiber @funtech-inc/use-shader-fx @types/three
+npm i three @react-three/fiber @react-three/drei @funtech-inc/use-shader-fx @types/three
 ```
 
-2. Then copy/download the `/WaterSurface` directory to your project
+2. Then copy/download the `/WaterSurface` directory to your project. Could be done by clone the repo.
 
 ```
 WaterSurface
@@ -56,6 +56,8 @@ Import components from the directory just copied above. There are 2 type of comp
 ## WaterSurface
 
 WaterSurface type component will be the water shader plane that reflects your scene and apply distortion effects.
+
+⚠️ The implementation is Planar Reflection, therefore it could be expensive in medium and complex scene. 
 
 ```jsx
 <WaterSurfaceSimple />
